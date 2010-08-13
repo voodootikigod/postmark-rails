@@ -10,6 +10,22 @@ module PostmarkMethods
     @tag = value
   end
 
+  def attachments(value)
+    value = [value] unless value.is_a?(Array)
+    @attachments = value.collect{|item|
+      if item.is_a?(Hash)
+        item
+      elsif item.is_a?(File)
+        {
+          "Name" => item.path.split("/")[-1],
+          "Content" => [IO.read(item.path)].pack("m"),
+          "ContentType" => "application/octet-stream"
+        }
+      end
+    }
+  end
+  
+
   def self.included(base)
     base.extend(ClassMethods)
     base.class_eval do
@@ -20,6 +36,7 @@ module PostmarkMethods
   def create_mail_with_tag
     returning create_mail_without_tag do |mail|
       mail.tag = @tag if @tag
+      mail.attachments = @attachments if @attachments
     end
   end
 

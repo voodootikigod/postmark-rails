@@ -9,7 +9,7 @@ begin
     gem.description = %Q{Use this plugin in your rails applications to send emails through the Postmark API}
     gem.email = "underlog@gmail.com"
     gem.homepage = "http://postmarkapp.com"
-    gem.authors = ["Petyo Ivanov"]
+    gem.authors = ["Petyo Ivanov", "Chris Williams"]
     gem.add_development_dependency "rspec"
     gem.add_dependency 'postmark'
 
